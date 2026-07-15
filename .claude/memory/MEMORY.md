@@ -1,0 +1,6 @@
+- [User Preferences](user_preferences.md) — Communication style and coding philosophy
+- [Project Overview](project_overview.md) — Goals, requirements, and status
+- [Tech Stack Decisions](tech_stack_decisions.md) — Confirmed technology choices
+- [Authorization Decision](authorization_decision.md) — Lambda Authorizer with API key validation
+- [Database Decision](database_decision.md) — Aurora Serverless v2 for PoC
+- [Database Models](database_models.md) — VPC and Subnet schema definitions
