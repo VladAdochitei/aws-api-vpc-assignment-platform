@@ -4,13 +4,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 6.54.0"
+      version = "~> 5.0"
     }
   }
-
-  backend "s3" {}
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = "eu-central-1"
 }
