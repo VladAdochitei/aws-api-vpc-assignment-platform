@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+venv/
+
+.pytest_cache/
+.coverage
+.coverage.*
+
+# Env vars
+.env
+.env.*
+!.env.example
+
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files — never commit state (should live in remote backend, e.g. S3)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
