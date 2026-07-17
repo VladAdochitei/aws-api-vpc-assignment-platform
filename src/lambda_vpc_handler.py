@@ -9,6 +9,7 @@ ROUTES = {
 }
 
 def api_handler(event, context):
+    print(event)
     key = (event["httpMethod"], event["resource"])
     fn = ROUTES.get(key)
     if not fn:
