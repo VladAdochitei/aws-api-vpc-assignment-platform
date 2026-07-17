@@ -33,26 +33,37 @@ Cheap database for PoC. Durability not critical for MVP.
 - **Pros:** Minimal infrastructure, super cheap
 - **Cons:** Concurrency issues with Lambda, manual file management
 
-## Decision: Aurora Serverless v2
+## Decision: DynamoDB
 
 **CHOSEN APPROACH** for this project:
-- PostgreSQL-compatible Aurora Serverless v2
-- Scales automatically based on demand
-- Costs pennies during PoC phase (scales to zero when idle)
-- SQL capabilities match project requirements
+- DynamoDB with two-table design (vpcs, subnets)
+- True serverless: no database instance to manage or pay for when idle
+- Pay-per-request pricing: free tier covers PoC traffic entirely
+- NoSQL model works well with Lambda's stateless execution
 
-### Why Aurora Serverless v2
-1. **Cost:** Absolutely minimal for PoC usage
-2. **Familiarity:** Standard SQL, similar to traditional RDS
-3. **Serverless:** Works well with Lambda-based API architecture
-4. **No capacity planning:** Auto-scales, no need to right-size instances
-5. **Production-ready:** When scaling up, infrastructure is already there
+### Why DynamoDB
+1. **Cost:** Free tier covers PoC usage; true scale-to-zero (Aurora v2 minimum = ~$43/month)
+2. **Serverless:** No VPC config, Secrets Manager, or connection pooling needed
+3. **Lambda fit:** Native IAM integration, no networking overhead
+4. **Simplicity:** Two-table design (vpcs as primary, subnets with vpc_id as sort key + GSI)
+5. **Low friction:** Minimal infrastructure, fast to deploy
+
+### Data Model (NoSQL)
+**VPCs Table:**
+- Partition key: `vpc_id` (AWS VPC ID, e.g., vpc-xxx)
+- Attributes: `vpc_name`, `cidr_block`, `region`, `created_by`, `created_at`, `status`
+
+**Subnets Table:**
+- Partition key: `vpc_id` (AWS VPC ID)
+- Sort key: `subnet_id` (AWS Subnet ID)
+- Attributes: `subnet_name`, `cidr_block`, `availability_zone`, `created_by`, `created_at`, `status`
+- GSI on `subnet_id` for direct subnet lookups
 
 ### Setup Notes
-- Create a serverless v2 Aurora cluster
-- Store connection credentials in Secrets Manager
-- Lambda functions retrieve secrets and connect
-- Database can be accessed from Lambda VPC or via RDS proxy
+- Create two DynamoDB tables with on-demand billing
+- Grant Lambda execution role permissions: `dynamodb:GetItem`, `dynamodb:PutItem`, `dynamodb:Query`, `dynamodb:Scan`, `dynamodb:UpdateItem`, `dynamodb:DeleteItem`
+- Lambda code queries VPCs by `vpc_id`, subnets by `vpc_id + subnet_id` or via GSI
+- Deletion: Python deletes subnets before deleting parent VPC (no CASCADE DELETE, but Lambda handles it)
 
 ### Why Not Alternatives
 - **RDS Free Tier:** Will eventually cost money; Aurora Serverless scales to zero
