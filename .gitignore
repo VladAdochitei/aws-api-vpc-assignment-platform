@@ -19,3 +19,6 @@ venv/
 *.tfstate
 *.tfstate.*
 *.tfstate.backup
+
+# Lambda build artifacts
+/build/
