@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Edit VPC{% endblock %}
+
+{% block content %}
+<h1>Edit VPC: {{ vpc.vpc_name }}</h1>
+
+<form method="POST">
+    <div class="form-group">
+        <label>VPC ID (read-only)</label>
+        <input type="text" value="{{ vpc.vpc_id }}" disabled>
+    </div>
+
+    <div class="form-group">
+        <label>CIDR Block (read-only)</label>
+        <input type="text" value="{{ vpc.cidr_block }}" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="vpc_name">VPC Name</label>
+        <input type="text" id="vpc_name" name="vpc_name" value="{{ vpc.vpc_name }}">
+    </div>
+
+    <div class="form-group">
+        <label for="region">Region</label>
+        <input type="text" id="region" name="region" value="{{ vpc.region }}">
+    </div>
+
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+            <option value="">-- No change --</option>
+            <option value="active" {% if vpc.status == 'active' %}selected{% endif %}>Active</option>
+            <option value="deleted" {% if vpc.status == 'deleted' %}selected{% endif %}>Deleted</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="/vpcs/{{ vpc.vpc_id }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

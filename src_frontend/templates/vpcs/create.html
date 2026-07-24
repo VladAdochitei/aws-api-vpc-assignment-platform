@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Create VPC{% endblock %}
+
+{% block content %}
+<h1>Create VPC</h1>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="vpc_name">VPC Name *</label>
+        <input type="text" id="vpc_name" name="vpc_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cidr_block">CIDR Block *</label>
+        <input type="text" id="cidr_block" name="cidr_block" placeholder="e.g., 10.0.0.0/16" required>
+    </div>
+
+    <div class="form-group">
+        <label for="region">Region *</label>
+        <input type="text" id="region" name="region" placeholder="e.g., eu-west-1" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create VPC</button>
+    <a href="/vpcs" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
