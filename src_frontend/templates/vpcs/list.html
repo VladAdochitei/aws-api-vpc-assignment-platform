@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}VPCs{% endblock %}
+
+{% block content %}
+<h1>VPCs</h1>
+
+<div style="margin-bottom: 2rem;">
+    <a href="/vpcs/create" class="btn btn-primary">+ Create VPC</a>
+</div>
+
+{% if vpcs %}
+<table>
+    <thead>
+        <tr>
+            <th>VPC ID</th>
+            <th>Name</th>
+            <th>CIDR Block</th>
+            <th>Region</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vpc in vpcs %}
+        <tr>
+            <td><a href="/vpcs/{{ vpc.vpc_id }}" style="color: #0073e6; text-decoration: none;">{{ vpc.vpc_id }}</a></td>
+            <td>{{ vpc.vpc_name }}</td>
+            <td>{{ vpc.cidr_block }}</td>
+            <td>{{ vpc.region }}</td>
+            <td>{{ vpc.status }}</td>
+            <td>
+                <a href="/vpcs/{{ vpc.vpc_id }}" class="btn btn-secondary">View</a>
+                <a href="/vpcs/{{ vpc.vpc_id }}/edit" class="btn btn-secondary">Edit</a>
+                <form method="POST" action="/vpcs/{{ vpc.vpc_id }}/delete" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this VPC?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No VPCs found. <a href="/vpcs/create">Create one</a></p>
+{% endif %}
+{% endblock %}

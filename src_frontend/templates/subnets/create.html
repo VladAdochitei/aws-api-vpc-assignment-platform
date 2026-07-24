@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Create Subnet{% endblock %}
+
+{% block content %}
+<h1>Create Subnet in {{ vpc.vpc_name }}</h1>
+
+<form method="POST">
+    <div class="form-group">
+        <label>VPC (read-only)</label>
+        <input type="text" value="{{ vpc.vpc_name }} ({{ vpc.vpc_id }})" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="subnet_name">Subnet Name *</label>
+        <input type="text" id="subnet_name" name="subnet_name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cidr_block">CIDR Block *</label>
+        <input type="text" id="cidr_block" name="cidr_block" placeholder="e.g., 10.0.1.0/24" required>
+    </div>
+
+    <div class="form-group">
+        <label for="availability_zone">Availability Zone (optional)</label>
+        <input type="text" id="availability_zone" name="availability_zone" placeholder="e.g., eu-central-1a">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Subnet</button>
+    <a href="/vpcs/{{ vpc.vpc_id }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

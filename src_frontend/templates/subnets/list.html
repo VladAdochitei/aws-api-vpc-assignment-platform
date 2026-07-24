@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Subnets{% endblock %}
+
+{% block content %}
+<h1>All Subnets</h1>
+
+{% if subnets %}
+<table>
+    <thead>
+        <tr>
+            <th>Subnet ID</th>
+            <th>VPC ID</th>
+            <th>Name</th>
+            <th>CIDR Block</th>
+            <th>Availability Zone</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subnet in subnets %}
+        <tr>
+            <td><a href="/subnets/{{ subnet.subnet_id }}" style="color: #0073e6; text-decoration: none;">{{ subnet.subnet_id }}</a></td>
+            <td><a href="/vpcs/{{ subnet.vpc_id }}" style="color: #0073e6; text-decoration: none;">{{ subnet.vpc_id }}</a></td>
+            <td>{{ subnet.subnet_name }}</td>
+            <td>{{ subnet.cidr_block }}</td>
+            <td>{{ subnet.availability_zone or 'N/A' }}</td>
+            <td>{{ subnet.status }}</td>
+            <td>
+                <a href="/subnets/{{ subnet.subnet_id }}" class="btn btn-secondary">View</a>
+                <a href="/subnets/{{ subnet.subnet_id }}/edit" class="btn btn-secondary">Edit</a>
+                <form method="POST" action="/subnets/{{ subnet.subnet_id }}/delete" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this subnet?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No subnets found.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Subnet {{ subnet.subnet_id }}{% endblock %}
+
+{% block content %}
+<h1>Subnet: {{ subnet.subnet_name }}</h1>
+
+<div class="detail">
+    <div class="detail-row">
+        <div class="detail-label">Subnet ID:</div>
+        <div class="detail-value">{{ subnet.subnet_id }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">VPC ID:</div>
+        <div class="detail-value"><a href="/vpcs/{{ subnet.vpc_id }}" style="color: #0073e6;">{{ subnet.vpc_id }}</a></div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Name:</div>
+        <div class="detail-value">{{ subnet.subnet_name }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">CIDR Block:</div>
+        <div class="detail-value">{{ subnet.cidr_block }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Availability Zone:</div>
+        <div class="detail-value">{{ subnet.availability_zone or 'N/A' }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Status:</div>
+        <div class="detail-value">{{ subnet.status }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Created At:</div>
+        <div class="detail-value">{{ subnet.created_at }}</div>
+    </div>
+</div>
+
+<div class="actions">
+    <a href="/subnets/{{ subnet.subnet_id }}/edit" class="btn btn-secondary">Edit Subnet</a>
+    <a href="/vpcs/{{ subnet.vpc_id }}" class="btn btn-secondary">Back to VPC</a>
+</div>
+{% endblock %}

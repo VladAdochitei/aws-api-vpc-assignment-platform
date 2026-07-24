@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}VPC {{ vpc.vpc_id }}{% endblock %}
+
+{% block content %}
+<h1>VPC: {{ vpc.vpc_name }}</h1>
+
+<div class="detail">
+    <div class="detail-row">
+        <div class="detail-label">VPC ID:</div>
+        <div class="detail-value">{{ vpc.vpc_id }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Name:</div>
+        <div class="detail-value">{{ vpc.vpc_name }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">CIDR Block:</div>
+        <div class="detail-value">{{ vpc.cidr_block }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Region:</div>
+        <div class="detail-value">{{ vpc.region }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Status:</div>
+        <div class="detail-value">{{ vpc.status }}</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-label">Created At:</div>
+        <div class="detail-value">{{ vpc.created_at }}</div>
+    </div>
+</div>
+
+<h2>Subnets ({{ subnets|length }})</h2>
+
+<div style="margin-bottom: 2rem;">
+    <a href="/vpcs/{{ vpc.vpc_id }}/subnets/create" class="btn btn-primary">+ Create Subnet</a>
+</div>
+
+{% if subnets %}
+<table>
+    <thead>
+        <tr>
+            <th>Subnet ID</th>
+            <th>Name</th>
+            <th>CIDR Block</th>
+            <th>Availability Zone</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subnet in subnets %}
+        <tr>
+            <td><a href="/subnets/{{ subnet.subnet_id }}" style="color: #0073e6; text-decoration: none;">{{ subnet.subnet_id }}</a></td>
+            <td>{{ subnet.subnet_name }}</td>
+            <td>{{ subnet.cidr_block }}</td>
+            <td>{{ subnet.availability_zone or 'N/A' }}</td>
+            <td>{{ subnet.status }}</td>
+            <td>
+                <a href="/subnets/{{ subnet.subnet_id }}" class="btn btn-secondary">View</a>
+                <a href="/subnets/{{ subnet.subnet_id }}/edit" class="btn btn-secondary">Edit</a>
+                <form method="POST" action="/subnets/{{ subnet.subnet_id }}/delete" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this subnet?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No subnets in this VPC. <a href="/vpcs/{{ vpc.vpc_id }}/subnets/create">Create one</a></p>
+{% endif %}
+
+<div class="actions">
+    <a href="/vpcs/{{ vpc.vpc_id }}/edit" class="btn btn-secondary">Edit VPC</a>
+    <a href="/vpcs" class="btn btn-secondary">Back to VPCs</a>
+</div>
+{% endblock %}
