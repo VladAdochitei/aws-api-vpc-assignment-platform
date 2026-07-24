@@ -32,8 +32,8 @@
             <td>
                 <a href="/vpcs/{{ vpc.vpc_id }}" class="btn btn-secondary">View</a>
                 <a href="/vpcs/{{ vpc.vpc_id }}/edit" class="btn btn-secondary">Edit</a>
-                <form method="POST" action="/vpcs/{{ vpc.vpc_id }}/delete" style="display: inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this VPC?');">Delete</button>
+                <form method="POST" action="/vpcs/{{ vpc.vpc_id }}/delete" style="display: inline; margin: 0; padding: 0;">
+                    <button type="submit" class="btn btn-danger" style="margin: 0;" onclick="return confirm('Delete this VPC?');">Delete</button>
                 </form>
             </td>
         </tr>

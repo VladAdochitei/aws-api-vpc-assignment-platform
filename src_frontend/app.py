@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 api = APIClient(
-    base_url=os.getenv('API_BASE_URL', 'https://<Some hash>.execute-api.eu-central-1.amazonaws.com/dev'),
+    base_url=os.getenv('API_BASE_URL', "https://<api-key-identifier>.execute-api.eu-central-1.amazonaws.com/dev"),
     api_key=os.getenv('API_KEY', 'dev-local-key-CHANGE-ME')
 )
 

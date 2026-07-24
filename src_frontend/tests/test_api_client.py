@@ -4,7 +4,7 @@ import os
 from services.api_client import APIClient
 
 API_KEY = "dev-local-key-CHANGE-ME"
-BASE_URL = os.getenv('API_BASE_URL', "https://wevckik1ug.execute-api.eu-central-1.amazonaws.com/dev")
+BASE_URL = os.getenv('API_BASE_URL', "https://<api-key-identifier>.execute-api.eu-central-1.amazonaws.com/dev")
 
 def test_workflow():
     print(f"Running integration tests against {BASE_URL}")

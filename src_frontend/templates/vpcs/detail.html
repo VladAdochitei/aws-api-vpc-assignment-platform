@@ -61,8 +61,8 @@
             <td>
                 <a href="/subnets/{{ subnet.subnet_id }}" class="btn btn-secondary">View</a>
                 <a href="/subnets/{{ subnet.subnet_id }}/edit" class="btn btn-secondary">Edit</a>
-                <form method="POST" action="/subnets/{{ subnet.subnet_id }}/delete" style="display: inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this subnet?');">Delete</button>
+                <form method="POST" action="/subnets/{{ subnet.subnet_id }}/delete" style="display: inline; margin: 0; padding: 0;">
+                    <button type="submit" class="btn btn-danger" style="margin: 0;" onclick="return confirm('Delete this subnet?');">Delete</button>
                 </form>
             </td>
         </tr>
